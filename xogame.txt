@@ -1,0 +1,131 @@
+// XO Game
+// create board : https://coderbyte.com/tutorial/create-a-tic-tac-toe-game-using-html-css-and-jquery
+// set rules to win
+// set player 1,2 loop
+//
+package main
+
+import (
+	"fmt"
+	"strconv"
+
+)
+
+func main() {
+	var input string
+	var n int
+	position := [9]rune{'1', '2', '3', '4', '5', '6', '7', '8', '9'}
+	player := 1
+	value := 'X'
+	count := 0
+
+	fmt.Println("XO Game")
+	fmt.Println("Player 1 (X) - Player 2 (O)")
+
+	for {
+		displayTable(position)
+
+		fmt.Printf("Player %d, enter a number: ", player)
+		fmt.Scanln(&input)
+		n, _ = strconv.Atoi(input)
+
+		if n < 1 || n > 9 {
+			fmt.Println("That is not a valid number! Please input only 1-9.")
+			continue
+		}
+
+		if position[n-1] == 'X' || position[n-1] == 'O' {
+			fmt.Println("That is not a valid move! Pease try again.")
+			continue
+		}
+
+		position[n-1] = value
+		count++
+
+		if position[0] == value && position[1] == value && position[2] == value {
+			displayTable(position)
+			fmt.Printf("Player %d is a winner!!!\n", player)
+			return
+		}
+
+		if position[3] == value && position[4] == value && position[5] == value {
+			displayTable(position)
+			fmt.Printf("Player %d is a winner!!!\n", player)
+			return
+		}
+
+		if position[6] == value && position[7] == value && position[8] == value {
+			displayTable(position)
+			fmt.Printf("Player %d is a winner!!!\n", player)
+			return
+		}
+
+		if position[0] == value && position[3] == value && position[6] == value {
+			displayTable(position)
+			fmt.Printf("Player %d is a winner!!!\n", player)
+			return
+		}
+
+		if position[1] == value && position[4] == value && position[7] == value {
+			displayTable(position)
+			fmt.Printf("Player %d is a winner!!!\n", player)
+			return
+		}
+
+		if position[2] == value && position[5] == value && position[8] == value {
+			displayTable(position)
+			fmt.Printf("Player %d is a winner!!!\n", player)
+			return
+		}
+
+		if position[0] == value && position[4] == value && position[8] == value {
+			displayTable(position)
+			fmt.Printf("Player %d is a winner!!!\n", player)
+			return
+		}
+
+		if position[2] == value && position[4] == value && position[6] == value {
+			displayTable(position)
+			fmt.Printf("Player %d is a winner!!!\n", player)
+			return
+		}
+
+		if count == 9 {
+			fmt.Println("It's a draw.")
+			return
+		}
+
+		if player == 1 {
+			player = 2
+			value = 'O'
+		} else {
+			player = 1
+			value = 'X'
+		}
+	}
+}
+
+func displayTable(position [9]rune) {
+	fmt.Println("   :   :   ")
+	fmt.Printf(" %s : %s : %s \n", setColorString(position[0]), setColorString(position[1]), setColorString(position[2]))
+	fmt.Println("___:___:___")
+	fmt.Println("   :   :   ")
+	fmt.Printf(" %s : %s : %s \n", setColorString(position[3]), setColorString(position[4]), setColorString(position[5]))
+	fmt.Println("___:___:___")
+	fmt.Println("   :   :   ")
+	fmt.Printf(" %s : %s : %s \n", setColorString(position[6]), setColorString(position[7]), setColorString(position[8]))
+	fmt.Println("   :   :   ")
+}
+
+func setColorString(value rune) string {
+	if value == 'X' {
+		return color.GreenString("%c", value)
+	}
+
+	if value == 'O' {
+		return color.RedString("%c", value)
+	}
+
+	return color.BlackString("%c", value)
+}
+
